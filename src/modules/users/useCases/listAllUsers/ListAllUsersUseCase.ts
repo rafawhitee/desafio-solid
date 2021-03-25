@@ -6,10 +6,17 @@ interface IRequest {
 }
 
 class ListAllUsersUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User[] {
-    // Complete aqui
+    let user: User | undefined = this.usersRepository.findById(user_id);
+    if (user) {
+      if (user.admin) {
+        return this.usersRepository.list();
+      }
+      throw new Error("Only admin can get list users");
+    }
+    throw new Error("Only registered users can get list users");
   }
 }
 
