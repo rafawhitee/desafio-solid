@@ -10,6 +10,7 @@ class ListAllUsersUseCase {
 
   execute({ user_id }: IRequest): User[] {
     let user: User | undefined = this.usersRepository.findById(user_id);
+    console.log(user);
     if (user) {
       if (user.admin) {
         return this.usersRepository.list();

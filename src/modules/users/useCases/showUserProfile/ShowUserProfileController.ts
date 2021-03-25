@@ -7,12 +7,16 @@ class ShowUserProfileController {
   constructor(private showUserProfileUseCase: ShowUserProfileUseCase) { }
 
   handle(request: Request, response: Response): Response {
-    const { user_id } = request.params;
-    let user: User | undefined = this.showUserProfileUseCase.execute({ user_id });
-    if (user) {
-      return response.json(user);
+    try {
+      const { user_id } = request.params;
+      let user: User | undefined = this.showUserProfileUseCase.execute({ user_id });
+      if (user) {
+        return response.status(200).json(user);
+      }
+      return response.status(404).json({ error: "ocorreu um erro" });
+    } catch (err) {
+      return response.status(404).json({ error: "ocorreu um erro" });
     }
-    return response.status(404).send();
   }
 }
 

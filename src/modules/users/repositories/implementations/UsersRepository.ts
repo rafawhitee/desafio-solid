@@ -26,6 +26,8 @@ class UsersRepository implements IUsersRepository {
   }
 
   findById(id: string): User | undefined {
+    console.log(this.users);
+    console.log(id);
     let user: User | undefined = this.users.find(u => u.id === id);
     return user;
   }
